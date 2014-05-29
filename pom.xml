@@ -1,123 +1,149 @@
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.openx.data</groupId>
-    <artifactId>json-serde</artifactId>
-    <version>1.1.9.2</version>
-    <packaging>jar</packaging>
+	<groupId>org.openx.data</groupId>
+	<artifactId>json-serde</artifactId>
+	<version>1.1.9.2-Hive13</version>
 
-    <name>openx-json-serde</name>
-    <url>https://github.com/rcongiu/Hive-JSON-Serde</url>
-     <scm>
-      <!-- Replace the connection below with your project connection -->
-      <connection>scm:git:git@github.com:rcongiu/Hive-JSON-Serde.git</connection>
-      <developerConnection>scm:git:git@github.com:rcongiu/Hive-JSON-Serde.git</developerConnection>
-      <url>scm:git:git@github.com:rcongiu/Hive-JSON-Serde.git</url>
-     
-      <tag>HEAD</tag>
-  </scm>
+	<name>openx-json-serde</name>
+	<url>https://github.com/rcongiu/Hive-JSON-Serde</url>
+	<scm>
+		<!-- Replace the connection below with your project connection -->
+		<connection>scm:git:git@github.com:rcongiu/Hive-JSON-Serde.git</connection>
+		<developerConnection>scm:git:git@github.com:rcongiu/Hive-JSON-Serde.git</developerConnection>
+		<url>scm:git:git@github.com:rcongiu/Hive-JSON-Serde.git</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<cdh.version>0.8.1-cdh4.0.1</cdh.version>
-    </properties>
+		<tag>HEAD</tag>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hive.version>0.13.0.2.1.0.0-92</hive.version>
+	</properties>
 
 
-    <build>
-	 <!-- wagon-ssh-external extension is necessary for deploying with scpexe -->
-    	<extensions>
-      		<extension>
-        		<groupId>org.apache.maven.wagon</groupId>
-        		<artifactId>wagon-ssh-external</artifactId>
-        		<version>2.2</version>
-      		</extension>
-    	</extensions>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-	    <plugin>
-        	<groupId>org.apache.maven.plugins</groupId>
-        	<artifactId>maven-release-plugin</artifactId>
-        	<version>2.4</version>
-      	    </plugin>
-	    <plugin>
-               <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-jgitflow-plugin</artifactId>
-                <version>1.0-alpha20</version>
-                <configuration>
-                    <allowSnapshots>false</allowSnapshots>
-                    <enableFeatureVersions>false</enableFeatureVersions>
-                    <pushFeatures>false</pushFeatures>
-                    <pushReleases>true</pushReleases>
-                    <allowUntracked>true</allowUntracked>
-		    <noDeploy>true</noDeploy>
-                </configuration>
-           </plugin>
+	<build>
+		<!-- wagon-ssh-external extension is necessary for deploying with scpexe -->
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-jgitflow-plugin</artifactId>
+				<version>1.0-alpha20</version>
+				<configuration>
+					<allowSnapshots>false</allowSnapshots>
+					<enableFeatureVersions>false</enableFeatureVersions>
+					<pushFeatures>false</pushFeatures>
+					<pushReleases>true</pushReleases>
+					<allowUntracked>true</allowUntracked>
+					<noDeploy>true</noDeploy>
+				</configuration>
+			</plugin>
 
-              <!-- Assembly Plugin                              -->
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                           
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <repositories>
-	<repository>
-	    <id>Cloudera</id>
-	    <name>Cloudera Maven Repo</name>
-	    <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-	</repository>
-    </repositories>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-serde</artifactId>
-            <version>${cdh.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-exec</artifactId>
-            <version>${cdh.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-core</artifactId>
-            <version>0.20.2</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+			<!-- Assembly Plugin -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>hortonworks</id>
+			<url>http://repo.hortonworks.com/content/repositories/releases</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- <dependency> <groupId>org.apache.hive</groupId> <artifactId>hive-serde</artifactId> 
+			<version>${hive.version}</version> <scope>provided</scope> </dependency> -->
+		<dependency>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-exec</artifactId>
+			<version>0.13.0.2.1.0.0-92</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tez</groupId>
+					<artifactId>tez-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.tez</groupId>
+					<artifactId>tez-dag</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.tez</groupId>
+					<artifactId>tez-common</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.tez</groupId>
+					<artifactId>tez-runtime-library</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.tez</groupId>
+					<artifactId>tez-mapreduce</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.tez</groupId>
+					<artifactId>tez-runtime-internals</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.zookeeper</groupId>
+					<artifactId>zookeeper</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>2.2.0.2.1.0.0-92</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>
 
 

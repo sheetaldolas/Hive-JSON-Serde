@@ -12,9 +12,11 @@
 
 package org.openx.data.jsonserde.objectinspector.primitive;
 
+import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.AbstractPrimitiveJavaObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorUtils;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableDoubleObjectInspector;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 import org.apache.hadoop.io.DoubleWritable;
 
 /**
@@ -25,7 +27,9 @@ public class JavaStringDoubleObjectInspector extends AbstractPrimitiveJavaObject
         implements SettableDoubleObjectInspector {
 
     public JavaStringDoubleObjectInspector() {
-        super(PrimitiveObjectInspectorUtils.doubleTypeEntry);
+        //super(PrimitiveObjectInspectorUtils.doubleTypeEntry);
+        super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.DOUBLE_TYPE_NAME));
+
     }
 
     @Override

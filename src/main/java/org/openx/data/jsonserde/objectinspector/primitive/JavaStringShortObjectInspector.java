@@ -12,10 +12,12 @@
 
 package org.openx.data.jsonserde.objectinspector.primitive;
 
+import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.hive.serde2.io.ShortWritable;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.AbstractPrimitiveJavaObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorUtils;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableShortObjectInspector;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 
 /**
  *
@@ -26,7 +28,9 @@ public class JavaStringShortObjectInspector
         implements SettableShortObjectInspector {
 
     public JavaStringShortObjectInspector() {
-        super(PrimitiveObjectInspectorUtils.shortTypeEntry);
+        //super(PrimitiveObjectInspectorUtils.shortTypeEntry);
+      super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.SMALLINT_TYPE_NAME));
+
     }
 
     @Override

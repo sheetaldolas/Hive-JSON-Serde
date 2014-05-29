@@ -13,10 +13,13 @@
 package org.openx.data.jsonserde.objectinspector.primitive;
 
 import java.sql.Timestamp;
+
+import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.hive.serde2.io.TimestampWritable;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.AbstractPrimitiveJavaObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorUtils;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableTimestampObjectInspector;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 
 /**
  * A timestamp that is stored in a String
@@ -26,7 +29,9 @@ public class JavaStringTimestampObjectInspector extends AbstractPrimitiveJavaObj
     implements SettableTimestampObjectInspector {
     
     public JavaStringTimestampObjectInspector() {
-        super(PrimitiveObjectInspectorUtils.timestampTypeEntry);
+        //super(PrimitiveObjectInspectorUtils.timestampTypeEntry);
+      super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.TIMESTAMP_TYPE_NAME));
+
     }
 
     
