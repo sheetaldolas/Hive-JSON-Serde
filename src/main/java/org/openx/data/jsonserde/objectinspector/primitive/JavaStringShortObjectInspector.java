@@ -20,47 +20,51 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableShortObje
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 
 /**
- *
+ * 
  * @author rcongiu
  */
-public class JavaStringShortObjectInspector 
-        extends AbstractPrimitiveJavaObjectInspector
-        implements SettableShortObjectInspector {
+public class JavaStringShortObjectInspector extends
+    AbstractPrimitiveJavaObjectInspector implements
+    SettableShortObjectInspector {
 
-    public JavaStringShortObjectInspector() {
-        //super(PrimitiveObjectInspectorUtils.shortTypeEntry);
-      super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.SMALLINT_TYPE_NAME));
+  public JavaStringShortObjectInspector() {
+    // super(PrimitiveObjectInspectorUtils.shortTypeEntry);
+    super(TypeInfoFactory
+        .getPrimitiveTypeInfo(serdeConstants.SMALLINT_TYPE_NAME));
 
+  }
+
+  @Override
+  public Object getPrimitiveWritableObject(Object o) {
+    if (o == null)
+      return null;
+
+    if (o instanceof String) {
+      return new ShortWritable(ParsePrimitiveUtils.parseShort((String) o));
+    } else {
+      return new ShortWritable(((Short) o).shortValue());
     }
+  }
 
-    @Override
-    public Object getPrimitiveWritableObject(Object o) {
-        if(o == null) return null;
-        
-        if(o instanceof String) {
-           return new ShortWritable(ParsePrimitiveUtils.parseShort((String)o)); 
-        } else {
-          return new ShortWritable(((Short) o).shortValue());
-        }
-    }
+  @Override
+  public short get(Object o) {
 
-    @Override
-    public short get(Object o) {
-        
-        if(o instanceof String) {
-           return ParsePrimitiveUtils.parseShort((String)o); 
-        } else {
-          return (((Short) o).shortValue());
-        }
+    if (o instanceof String) {
+      return ParsePrimitiveUtils.parseShort((String) o);
+    } else if (o instanceof Short) {
+      return (Short) o;
+    } else {
+      return ParsePrimitiveUtils.parseShort(o.toString());
     }
+  }
 
-    @Override
-    public Object create(short value) {
-        return Short.valueOf(value);
-    }
+  @Override
+  public Object create(short value) {
+    return Short.valueOf(value);
+  }
 
-    @Override
-    public Object set(Object o, short value) {
-        return Short.valueOf(value);
-    }
+  @Override
+  public Object set(Object o, short value) {
+    return Short.valueOf(value);
+  }
 }

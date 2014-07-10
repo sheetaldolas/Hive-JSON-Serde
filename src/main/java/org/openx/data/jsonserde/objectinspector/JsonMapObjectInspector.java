@@ -53,7 +53,8 @@ public class JsonMapObjectInspector extends StandardMapObjectInspector {
   @Override
   public Object getMapValueElement(Object data, Object key) {
     if (data == null) {
-      return -1;
+      return null ; // Assume as good as no data exist
+      //return -1;
     }
     
      JSONObject jObj = (JSONObject) data;

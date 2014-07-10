@@ -20,47 +20,49 @@ import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 import org.apache.hadoop.io.LongWritable;
 
 /**
- *
+ * 
  * @author rcongiu
  */
-public class JavaStringLongObjectInspector
-        extends AbstractPrimitiveJavaObjectInspector
-        implements SettableLongObjectInspector {
+public class JavaStringLongObjectInspector extends
+    AbstractPrimitiveJavaObjectInspector implements SettableLongObjectInspector {
 
-    public JavaStringLongObjectInspector() {
-        //super(PrimitiveObjectInspectorUtils.longTypeEntry);
-      super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.BIGINT_TYPE_NAME));
+  public JavaStringLongObjectInspector() {
+    // super(PrimitiveObjectInspectorUtils.longTypeEntry);
+    super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.BIGINT_TYPE_NAME));
 
+  }
+
+  @Override
+  public Object getPrimitiveWritableObject(Object o) {
+    if (o == null)
+      return null;
+
+    if (o instanceof String) {
+      return new LongWritable(ParsePrimitiveUtils.parseLong((String) o));
+    } else {
+      return new LongWritable(((Long) o).longValue());
     }
+  }
 
-    @Override
-    public Object getPrimitiveWritableObject(Object o) {
-        if(o == null) return null;
-        
-        if(o instanceof String) {
-           return new LongWritable(ParsePrimitiveUtils.parseLong((String)o)); 
-        } else {
-          return new LongWritable(((Long) o).longValue());
-        }
-    }
+  @Override
+  public long get(Object o) {
 
-    @Override
-    public long get(Object o) {
-        
-        if(o instanceof String) {
-           return ParsePrimitiveUtils.parseLong((String)o); 
-        } else {
-          return (((Long) o).longValue());
-        }
+    if (o instanceof String) {
+      return ParsePrimitiveUtils.parseLong((String) o);
+    } else if (o instanceof Long) {
+      return (Long) o;
+    } else {
+      return ParsePrimitiveUtils.parseLong(o.toString());
     }
+  }
 
-    @Override
-    public Object create(long value) {
-        return Long.valueOf(value);
-    }
+  @Override
+  public Object create(long value) {
+    return Long.valueOf(value);
+  }
 
-    @Override
-    public Object set(Object o, long value) {
-        return Long.valueOf(value);
-    }
+  @Override
+  public Object set(Object o, long value) {
+    return Long.valueOf(value);
+  }
 }

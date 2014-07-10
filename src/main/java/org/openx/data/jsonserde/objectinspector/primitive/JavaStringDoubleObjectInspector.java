@@ -20,47 +20,51 @@ import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 import org.apache.hadoop.io.DoubleWritable;
 
 /**
- *
+ * 
  * @author rcongiu
  */
-public class JavaStringDoubleObjectInspector extends AbstractPrimitiveJavaObjectInspector
-        implements SettableDoubleObjectInspector {
+public class JavaStringDoubleObjectInspector extends
+    AbstractPrimitiveJavaObjectInspector implements
+    SettableDoubleObjectInspector {
 
-    public JavaStringDoubleObjectInspector() {
-        //super(PrimitiveObjectInspectorUtils.doubleTypeEntry);
-        super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.DOUBLE_TYPE_NAME));
+  public JavaStringDoubleObjectInspector() {
+    // super(PrimitiveObjectInspectorUtils.doubleTypeEntry);
+    super(TypeInfoFactory.getPrimitiveTypeInfo(serdeConstants.DOUBLE_TYPE_NAME));
 
+  }
+
+  @Override
+  public Object getPrimitiveWritableObject(Object o) {
+    if (o == null)
+      return null;
+
+    if (o instanceof String) {
+      return new DoubleWritable(Double.parseDouble((String) o));
+    } else {
+      return new DoubleWritable(((Double) o).doubleValue());
     }
+  }
 
-    @Override
-    public Object getPrimitiveWritableObject(Object o) {
-        if(o == null) return null;
-        
-        if(o instanceof String) {
-           return new DoubleWritable(Double.parseDouble((String)o)); 
-        } else {
-          return new DoubleWritable(((Double) o).doubleValue());
-        }
-    }
+  @Override
+  public double get(Object o) {
 
-    @Override
-    public double get(Object o) {
-        
-        if(o instanceof String) {
-           return Double.parseDouble((String)o); 
-        } else {
-          return (((Double) o).doubleValue());
-        }
+    if (o instanceof String) {
+      return Double.parseDouble((String) o);
+    } else if (o instanceof Double) {
+      return (Double) o;
+    } else {
+      return Double.valueOf(o.toString());
     }
+  }
 
-    @Override
-    public Object create(double value) {
-        return Double.valueOf(value);
-    }
+  @Override
+  public Object create(double value) {
+    return Double.valueOf(value);
+  }
 
-    @Override
-    public Object set(Object o, double value) {
-        return Double.valueOf(value);
-    }
-    
+  @Override
+  public Object set(Object o, double value) {
+    return Double.valueOf(value);
+  }
+
 }

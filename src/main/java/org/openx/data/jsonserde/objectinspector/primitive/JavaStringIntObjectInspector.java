@@ -46,11 +46,13 @@ public class JavaStringIntObjectInspector
 
     @Override
     public int get(Object o) {
-        if(o instanceof String) {
-           return ParsePrimitiveUtils.parseInt((String)o); 
-        } else {
-           return ((Integer) o).intValue();
-        }
+      if (o instanceof String) {
+        return ParsePrimitiveUtils.parseInt((String) o);
+      } else if (o instanceof Integer) {
+        return (Integer) o;
+      } else {
+        return ParsePrimitiveUtils.parseInt(o.toString());
+      }
     }
 
     @Override
