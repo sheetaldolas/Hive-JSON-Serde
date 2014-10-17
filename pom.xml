@@ -4,7 +4,7 @@
 
 	<groupId>com.github.sheetaldolas</groupId>
 	<artifactId>json-serde</artifactId>
-	<version>1.1.9.6-SNAPSHOT</version>
+	<version>1.1.9.8</version>
 
 	<name>openx-json-serde</name>
 	<url>http://github.com/sheetaldolas/Hive-JSON-Serde</url>
@@ -19,7 +19,7 @@
 		<connection>scm:git:git://github.com/sheetaldolas/Hive-JSON-Serde</connection>
 		<developerConnection>scm:git:git@github.com:sheetaldolas/Hive-JSON-Serde.git</developerConnection>
 		<url>http://github.com/sheetaldolas/Hive-JSON-Serde</url>
-		<tag>json-serde-1.1.9.6</tag>
+		<tag>json-serde-1.1.9.8</tag>
 	</scm>
 	<developers>
 		<developer>
