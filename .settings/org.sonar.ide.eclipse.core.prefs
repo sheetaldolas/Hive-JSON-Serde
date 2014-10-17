@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
 extraProperties=
-projectKey=org.openx.data\:json-serde
+projectKey=com.github.sheetaldolas\:json-serde
 serverUrl=http\://localhost\:9000
 version=2
